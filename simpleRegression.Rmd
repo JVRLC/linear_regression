@@ -37,7 +37,7 @@ abline(reg,col="red")
 predict(reg,newdata = data.frame(Gr.Liv.Area=c(1500,2300,3000)))
 ```
 
-##Comparaison :
+## Comparaison :
 ```{r}
 cbind("prix observés"=df$SalePrice,"Prédiction"=reg$fitted.values,"Résidus"=reg$residuals)
 ```
@@ -50,6 +50,7 @@ Résidus assez élevé !
 ## Graphiques :
 Graphique 1 : pas de tendance dans les résidus (courbe de tendance en rouge quasiment confondue avec l'axe des abscisses )
 Graphique 2 : normalité certainement pas respectée
+
 ```{r}
 par(mfrow=c(1,2))
 plot(reg,1:2)
