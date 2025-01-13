@@ -1,0 +1,57 @@
+---
+title: "tp_linear_regression"
+author: "Serigne Saliou Bamba MBAYE"
+date: "2025-01-13"
+output: html_document
+---
+## Importation des données
+```{r}
+df <- read.csv2(file="simplifiedAmesHousing.csv",header = TRUE,sep=';',dec = '.',stringsAsFactors = TRUE)
+df
+
+```
+## Diagramme de dispersion
+```{r}
+plot(SalePrice~Gr.Liv.Area,data=df)
+```
+
+### Etude de la corréaltion linéaire :
+Elle est assez élevée : l'ajustement est pertinent.
+
+```{r}
+cor(df$SalePrice,df$Gr.Liv.Area)
+```
+## Régression Linéaire simple :
+Estimateur de E(SalePrice|Gr.Liv.Area)= 13289.6 + 111.7*Gr.Liv.Area
+```{r}
+reg <- lm(SalePrice~Gr.Liv.Area,data=df)
+```
+
+
+```{r}
+plot(SalePrice~Gr.Liv.Area,data=df)
+abline(reg,col="red")
+```
+## Prédictions :
+```{r}
+predict(reg,newdata = data.frame(Gr.Liv.Area=c(1500,2300,3000)))
+```
+
+##Comparaison :
+```{r}
+cbind("prix observés"=df$SalePrice,"Prédiction"=reg$fitted.values,"Résidus"=reg$residuals)
+```
+## Evaluation du modèle :
+Résidus assez élevé !
+```{r}
+(RMSE <- sqrt(mean(reg$residuals^2)))
+(MAE <- mean(abs(reg$residuals)))
+```
+## Graphiques :
+Graphique 1 : pas de tendance dans les résidus (courbe de tendance en rouge quasiment confondue avec l'axe des abscisses )
+Graphique 2 : normalité certainement pas respectée
+```{r}
+par(mfrow=c(1,2))
+plot(reg,1:2)
+```
+
