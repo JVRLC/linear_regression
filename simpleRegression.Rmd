@@ -55,4 +55,25 @@ Graphique 2 : normalité certainement pas respectée
 par(mfrow=c(1,2))
 plot(reg,1:2)
 ```
+## test 
+```{r}
+install.packages("car")
+install.packages(c("lm","skedastic"))
+library(car)
+library(lmtest)
+library(skedastic)
+```
+## Homoscédasticité :
 
+```{r}
+#Normalité des résidus : rejetée ici !
+shapiro.test(reg$residuals)
+
+# Tests d'homoscedasticité : Ho : les résidus sont homoscédastiques
+bptest(reg) #non
+
+ncvTest(reg) # sous l'hypothèses de normalité
+
+# plus robuste à la non-normalité A APPLIQUER EN CAS DE NON NORMALITE
+
+white(reg) # Rejet de l'hypothese d'homoscedasricite
